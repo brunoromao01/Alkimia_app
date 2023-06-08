@@ -4,7 +4,7 @@ export const getRealm = async () => {
 	return await Realm.open({
 		path: 'juiceApp',
 		schema: [Essence, Brand, Suplier, Recipe, Config, RecipeProduced],
-		schemaVersion: 35
+		schemaVersion: 36
 	})
 }
 
@@ -55,7 +55,7 @@ export const Essence = {
 		quantity: 'double',
 		price: 'double',
 		suplier: 'Suplier?',
-		isEssence: 'bool'
+		type: 'int'
 	}
 }
 

@@ -31,7 +31,9 @@ export default props => {
     const [range, setRange] = useState(70) //slide vg pg
     const [essenceSelected, setEssenceSelected] = useState({})
     const [essences, setEssences] = useState({})
-    const [vgpg, setVgpg] = useState({})
+    // const [newVg, setnewVg] = useState({})
+    const [newPg, setNewPg] = useState({})
+    const [newVg, setNewVg] = useState({})
     const [modalVisible, setModalVisible] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
 
@@ -100,10 +102,18 @@ export default props => {
                 const b = config[0].breathDefault
                 const m = config[0].monthDefault
                 const ess = realm.objects('Essence')
-                const e = ess.filtered('isEssence == true')
+                // const e = ess.filtered('isEssence == true')
+                const e = ess.filtered('type == 1')
                 setEssences(e)
-                const v = ess.filtered('isEssence == false')
-                setVgpg(e)
+
+
+                // const v = ess.filtered('isEssence == false')
+                // setnewVg(e)
+                const v = ess.filtered('type == 2')
+                const p = ess.filtered('type == 3')
+                setNewPg(p)
+                setNewVg(v)
+
                 const r = realm.objects('Recipe')
                 setRecipes(r)
                 setStep(s)
@@ -117,7 +127,10 @@ export default props => {
                     setRecipes([...values])
                 })
                 v.addListener((values) => {
-                    setVgpg([...values])
+                    setNewVg([...values])
+                })
+                p.addListener((values) => {
+                    setNewPg([...values])
                 })
                 config.addListener((values) => {
                     setStep(values[0].stepDefault)
@@ -130,6 +143,7 @@ export default props => {
                     e.removeAllListeners()
                     r.removeAllListeners()
                     v.removeAllListeners()
+                    p.removeAllListeners()
                     config.removeAllListeners()
                 }
 
@@ -585,8 +599,8 @@ export default props => {
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
-                    
-                 {/* Modal Loading */}
+
+                    {/* Modal Loading */}
                     <Modal visible={modalLoading} transparent >
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                             <ActivityIndicator size="large" color={estilo.colors.laranja} />
@@ -883,7 +897,7 @@ export default props => {
                                         setEssenceEmpty(false)
                                     }}>
                                         <View style={{ flex: 1, backgroundColor: 'transparent', backgroundColor: 'rgba(0,0,0,0.6)' }} />
-                                    </TouchableWithoutFeedback>                                    
+                                    </TouchableWithoutFeedback>
                                 </Modal>
                                 <View style={{ height: height * 0.4 }}>
                                     <FlatList
@@ -903,7 +917,7 @@ export default props => {
                                                         </View>
                                                         <View style={{ width: '50%' }}>
                                                             <SelectDropdown
-                                                                data={vgpg}
+                                                                data={newVg}
                                                                 onSelect={(selectedItem, index) => {
                                                                     setVgSelected(selectedItem)
                                                                 }}
@@ -956,7 +970,7 @@ export default props => {
                                                         </View>
                                                         <View style={{ width: '50%' }}>
                                                             <SelectDropdown
-                                                                data={vgpg}
+                                                                data={newPg}
                                                                 onSelect={(selectedItem, index) => {
                                                                     setPgSelected(selectedItem)
                                                                 }}
@@ -1101,7 +1115,7 @@ export default props => {
                                         <View style={{ flex: 1, backgroundColor: 'transparent', backgroundColor: 'rgba(0,0,0,0.6)' }} />
                                     </TouchableWithoutFeedback>
                                 </Modal>
-                                
+
                                 {/* recipes = 0 mostra imagem do empty e botao. Caso contrario flatlist cardrecipe */}
                                 {
                                     recipes.length < 1 ?
@@ -1125,10 +1139,10 @@ export default props => {
                                 }
                             </View>
                     }
-                </View >   
+                </View >
                 <View style={{ flex: 1, backgroundColor: 'white' }} />
             </View >
-         
+
         </>
 
     )

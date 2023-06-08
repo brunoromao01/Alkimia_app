@@ -120,7 +120,7 @@ export default ({ data, saveRating }) => {
                         {/* VG */}
                         <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', }}>
                             <View style={{ width: '44%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                                <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssence}>VG ({data.recipe.essenceVg.brand.name})</Text></View>
+                                <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssence}>{data.recipe.essenceVg.name}  ({data.recipe.essenceVg.brand.name})</Text></View>
                             <View style={{ width: '14%', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssence}>{data.recipe.vg.toFixed(2)}</Text></View>
                             <View style={{ width: '14%', justifyContent: 'center', alignItems: 'center' }}>
@@ -134,7 +134,7 @@ export default ({ data, saveRating }) => {
                         {/* PG */}
                         <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', }}>
                             <View style={{ width: '44%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                                <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssence}>PG ({data.recipe.essencePg.brand.name})</Text></View>
+                                <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssence}>{data.recipe.essencePg.name} ({data.recipe.essencePg.brand.name})</Text></View>
                             <View style={{ width: '14%', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssence}>{pgPercent.toFixed(2)}</Text></View>
                             <View style={{ width: '14%', justifyContent: 'center', alignItems: 'center' }}>
@@ -184,7 +184,7 @@ export default ({ data, saveRating }) => {
                                 <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssenceBold}>100</Text>
                             </View>
                             <View style={{ width: '14%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssenceBold}>{data.quantity} </Text>
+                                <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssenceBold}>{data.quantity.toFixed(2)} </Text>
                             </View>
                             <View style={{ width: '14%', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textCardEssenceBold}>{gramaTotal.toFixed(2)}</Text>

@@ -231,21 +231,20 @@ export default props => {
 
                                             <View>
                                                 <VictoryChart
-                                                // theme={VictoryTheme.material}
-                                                // domainPadding={25}
+                                                    domainPadding={15}                                                   
                                                 >
                                                     <VictoryBar
                                                         // data={total.filter(essencia => essencia.qtde >= 30)}
                                                         data={total.sort()}
                                                         x='name' y='qtde'
-                                                        alignment="start"
+                                                        alignment="middle"
                                                         labels={({ datum }) => `${Number(datum._y).toFixed(1)}`}
                                                         sortOrder="descending"
                                                         style={{ data: { fill: estilo.colors.laranja, fontSize: RFValue(8) } }}
                                                     />
                                                     <VictoryAxis
                                                         tickFormat={total.name}
-                                                        tickLabelComponent={<VictoryLabel angle={-30} textAnchor="end" style={{ fontSize: RFValue(8) }} />}
+                                                        tickLabelComponent={<VictoryLabel angle={30} textAnchor="start" style={{ fontSize: RFValue(8) }} />}
                                                     />
                                                     {/* <VictoryAxis
                                             dependentAxis
@@ -259,6 +258,7 @@ export default props => {
                                     </>
                                     : false
                                 }
+                                <View style={{ width: '95%', alignSelf: 'center', borderWidth: 1, borderColor: estilo.colors.azul, marginTop: RFValue(20) }} />
                                 {custo.length > 0 ?
                                     <>
                                         <View >
@@ -291,6 +291,7 @@ export default props => {
                                             </View>
                                             <Text style={styles.textCardEssence}>Receitas por custo/ml</Text>
                                         </View>
+                                        <View style={{ width: '95%', alignSelf: 'center', borderWidth: 1, borderColor: estilo.colors.azul, marginTop: RFValue(20) }} />
                                     </>
                                     : false
                                 }

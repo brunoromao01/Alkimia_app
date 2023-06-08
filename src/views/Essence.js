@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, TouchableWithoutFeedback, Modal, Dimensions, TouchableOpacity, FlatList, Button, Switch, Image } from 'react-native'
-import { TextInput } from 'react-native-paper'
+import { StyleSheet, View, Text, TouchableWithoutFeedback, Modal, Dimensions, TouchableOpacity, FlatList, Switch, Image } from 'react-native'
+import { TextInput, RadioButton } from 'react-native-paper'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { getRealm } from '../services/realm'
 import { v4 as uuid } from 'uuid'
@@ -20,7 +20,7 @@ export default props => {
     const [modalBrand, setModalBrand] = useState(false);
     const [modalSuplier, setModalSuplier] = useState(false);
     const [search, setSearch] = useState("")
-    const [isEssence, setIsEssence] = useState(true)
+    // const [isEssence, setIsEssence] = useState(true)
     const [showAlertBrandUsed, setShowAlertBrandUsed] = useState(false)
     const [showAlertSuplierUsed, setShowAlertSuplierUsed] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
@@ -42,7 +42,7 @@ export default props => {
     }
 
 
-
+    const [value, setValue] = React.useState(1);
 
     //marca e fornecedor são os label dos input
     const [marca, setMarca] = useState("*Marca")
@@ -120,6 +120,9 @@ export default props => {
 
     }, [essenceOrder, brandOrder, quantityOrder])
 
+
+
+    // fazendo nova consulta conforme o digitado na pesquisa
     useEffect(() => {
         try {
             async function loadSchema2() {
@@ -255,7 +258,7 @@ export default props => {
             const parseQuantity = Number(newQuantity)
             const realm = await getRealm()
             var status = idUpdated == 0 ? 'never' : 'modified'
-            
+
             var id = idUpdated == 0 ? `${uuid()}` : idUpdated
             const fornecedor = newSuplierFull._id ? newSuplierFull : null
 
@@ -269,14 +272,14 @@ export default props => {
                         quantity: parseQuantity,
                         price: parsePrice,
                         suplier: fornecedor,
-                        isEssence: isEssence
+                        type: value
                     }, status)
                 })
                 setMarca('*Marca')
                 setFornecedor('Fornecedor')
                 setModalVisible(false)
                 setNewBrandFull({})
-                if (status == 'never' && essences.length % 2 !== 0) {                     
+                if (status == 'never' && essences.length % 2 !== 0) {
                     showInterstitial()
                 }
             } catch (err) {
@@ -304,7 +307,8 @@ export default props => {
         setNewBrandFull(data.brand)
         setMarca(data.brand.name)
         setModalVisible(true)
-        setIsEssence(data.isEssence)
+        // setIsEssence(data.isEssence)
+        setValue(data.type)
     }
 
     return (
@@ -376,7 +380,8 @@ export default props => {
                         setNewPrice('')
                         setNewTaste('')
                         setIdUpdated(0)
-                        setIsEssence(true)
+                        // setIsEssence(true)
+                        setValue(1)
                         setPriceEmpty(false)
                         setBrandEmpty(false)
                         setNameEmpty(false)
@@ -447,16 +452,36 @@ export default props => {
 
                         {/*Modal cadastro de essencia */}
                         <View style={{ width: '94%', paddingTop: RFValue(20), height: '100%', borderWidth: 1, borderColor: estilo.colors.laranja, alignSelf: 'center', backgroundColor: 'white' }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginLeft: RFValue(10) }}>
-                                <Switch
+
+                            {/* <Switch
                                     trackColor={{ false: '#767577', true: '#FAB709' }}
                                     thumbColor={isEssence ? estilo.colors.laranja : '#f4f3f4'}
                                     ios_backgroundColor="#3e3e3e"
                                     onValueChange={() => setIsEssence(!isEssence)}
                                     value={isEssence}
                                 />
-                                <Text style={styles.buttonText}>É essência ?</Text>
-                            </View>
+                                <Text style={styles.buttonText}>É essência ?</Text> */}
+                            <RadioButton.Group onValueChange={newValue => {
+                                console.log(newValue)
+                                setValue(newValue)
+                            }}
+                                value={value}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', }}>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text>Essência</Text>
+                                        <RadioButton value={1} color={estilo.colors.laranja} />
+                                    </View>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text>VG</Text>
+                                        <RadioButton value={2} color={estilo.colors.laranja} />
+                                    </View>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text>PG</Text>
+                                        <RadioButton value={3} color={estilo.colors.laranja} />
+                                    </View>
+                                </View>
+                            </RadioButton.Group>
+
 
                             <TextInput
                                 style={styles.inputModal}
